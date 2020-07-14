@@ -1,14 +1,17 @@
 import xml.etree.ElementTree as etree
 import argparse
+import re
 from tqdm import tqdm
 
 NAMESPACES = {'wiki': 'http://www.mediawiki.org/xml/export-0.10/'}
 TEXT_XPATH = 'wiki:page/wiki:revision/wiki:text'
+TAMIL_REGEX = '([த-\u0BFF]+)'  # @Rahul-RB wanted verbose regex, but idk what is u0BFF
 
 class TamilParser:
     def __init__(self, filepath):
         self.filepath = filepath
 
+    # Utility, use if needed
     @staticmethod
     def is_tamil(word):
         return ord(word[0]) >= 2944 and ord(word[0]) <= 3071
@@ -21,7 +24,8 @@ class TamilParser:
 
     def parse_text(self):
         for text in self.yield_text_from_file():
-            pass
+            print(re.findall(TAMIL_REGEX, text))
+            break
 
 if __name__ == '__main__':
 
