@@ -1,3 +1,27 @@
+#!/bin/bash/python3
+
+'''
+Author: Ganesh Kathiresan
+Github: ganesh-k13
+
+ganesh-k13/tamil-words-database
+Copyright (C) 2020  Ganesh Kathiresan
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+'''
+
+
 import xml.etree.ElementTree as etree
 import argparse
 import re
@@ -18,7 +42,7 @@ class TamilParser:
         return ord(word[0]) >= 2944 and ord(word[0]) <= 3071
 
     def yield_text_from_file(self):
-        print('Parsing dump file. This may take 10 to 30 seconds depending on your machine...')
+        print(f'Parsing {self.filepath}. This may take 10 to 30 seconds depending on your machine...')
         root = etree.parse(self.filepath).getroot()
         for textnode in tqdm(root.findall(TEXT_XPATH, NAMESPACES), desc='Parsing'):
             yield(textnode.text)
@@ -29,10 +53,11 @@ class TamilParser:
                 self.result.update(re.findall(TAMIL_REGEX, text))
             except TypeError:
                 pass # [TODO]
-
+        print('Parsing done!')
         with open(outfile, 'w') as f:
             for word in tqdm(self.result, desc='dumping'):
                 print(word, file=f)
+        print(f'Dump successful! Around {len(self.result)} unique words found!')
 
 if __name__ == '__main__':
 
