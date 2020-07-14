@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 NAMESPACES = {'wiki': 'http://www.mediawiki.org/xml/export-0.10/'}
 TEXT_XPATH = 'wiki:page/wiki:revision/wiki:text'
-TAMIL_REGEX = '([த-\u0BFF]+)'  # @Rahul-RB wanted verbose regex, but idk what is u0BFF
+TAMIL_REGEX = '([\u0B80-\u0BFF]+)'  # This witchcraft: https://stackoverflow.com/a/22075070/5671364 | @Rahul-RB likes this
 
 class TamilParser:
     def __init__(self, filepath):
