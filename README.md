@@ -1,4 +1,5 @@
 # Tamil Words Database Generator
+![stability-wip](https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg)
 
 This script aims to find unique words in tamil wikipedia database
 
